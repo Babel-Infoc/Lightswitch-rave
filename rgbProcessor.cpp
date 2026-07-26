@@ -12,7 +12,7 @@ uint8_t debounceStart = 0;
 
 // Animation mode (0 = glitchLoop, 1 = other animations...)
 uint8_t animationMode = 0;
-const uint8_t numAnimationModes = 1; // Currently only glitchLoop, expand this as you add more
+const uint8_t numAnimationModes = 4; // Currently only glitchLoop, expand this as you add more
 
 // Swatch preview animation flag
 bool swatchPreviewActive = false;
@@ -74,6 +74,11 @@ void calculateLuminance() {
 
 // MARK: Button Handling ------------------------------
 void checkButtons() {
+    // Don't process button events while a preview animation is playing.
+    // sendToRGB calls checkButtons on every PWM frame, so without this guard
+    // a button release detected mid-animation would advance swNum a second time.
+    if (swatchPreviewActive || animationPreviewActive) return;
+
     if (debounceStart > 0) {
         debounceStart--;
     } else {
@@ -90,13 +95,10 @@ void checkButtons() {
                 if (!buttonHeldFor2Seconds) {
                     // Short press - change swatch
                     swNum = (swNum + 1) % numSwatches;
-                    saveSettingsToFlash(swNum, currentBrightness, animationMode);
                     swatchPreviewActive = true;
                 } else {
-                    // Long press was released - exit brightness mode and save brightness
+                    // Long press was released - exit brightness mode
                     brightnessAdjustMode = false;
-                    // Save both swatch and current brightness to flash
-                    saveSettingsToFlash(swNum, currentBrightness, animationMode);
                 }
                 buttonHeldFor2Seconds = false;
             }
@@ -109,21 +111,20 @@ void checkButtons() {
             }
         }
 
-        // Check animation button
+        // Check animation button (skipped when no button is wired to this config)
         uint8_t animButtonState = digitalRead(animBtn);
 
         if (animButtonState != animButtonLastState) {
             if (animButtonState == LOW) {
                 // Button just pressed - cycle to next animation mode
                 animationMode = (animationMode + 1) % numAnimationModes;
-                saveSettingsToFlash(swNum, currentBrightness, animationMode);
                 animationPreviewActive = true;
             }
             animButtonLastState = animButtonState;
         }
 
         // Restart the debounce timer
-        debounceStart = 10; // Reduced for more responsive long press detection
+        debounceStart = 20; // Reduced for more responsive long press detection
     }
 }
 

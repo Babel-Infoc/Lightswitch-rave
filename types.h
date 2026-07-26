@@ -26,7 +26,6 @@ struct luminance {
 
 // Brightness and luminance globals
 extern float currentBrightness;
-extern float pulseBrightness;
 extern const luminance red;
 extern const luminance green;
 extern const luminance blue;

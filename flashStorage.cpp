@@ -9,8 +9,8 @@
 // Use a page near the end but leave some safety margin
 // Flash page size is 64 bytes on CH32V003, not 1KB
 #define FLASH_PAGE_SIZE 64
-// Use address at 14KB mark (0x08003800), well away from program code
-#define FLASH_SETTINGS_PAGE_ADDR 0x08003800
+// Use address at 14KB mark (0x08003FC0), well away from program code
+#define FLASH_SETTINGS_PAGE_ADDR 0x08003FC0
 
 // Calculate checksum for settings
 uint8_t calculateChecksum(const FlashSettings* settings) {
