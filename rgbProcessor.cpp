@@ -96,9 +96,13 @@ void checkButtons() {
                     // Short press - change swatch
                     swNum = (swNum + 1) % numSwatches;
                     swatchPreviewActive = true;
+                    // Save the new swatch to flash
+                    saveSettingsToFlash(swNum, currentBrightness, animationMode);
                 } else {
                     // Long press was released - exit brightness mode
                     brightnessAdjustMode = false;
+                    // Save brightness setting to flash
+                    saveSettingsToFlash(swNum, currentBrightness, animationMode);
                 }
                 buttonHeldFor2Seconds = false;
             }
@@ -119,6 +123,8 @@ void checkButtons() {
                 // Button just pressed - cycle to next animation mode
                 animationMode = (animationMode + 1) % numAnimationModes;
                 animationPreviewActive = true;
+                // Save the new animation mode to flash
+                saveSettingsToFlash(swNum, currentBrightness, animationMode);
             }
             animButtonLastState = animButtonState;
         }

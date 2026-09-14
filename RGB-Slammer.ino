@@ -20,7 +20,7 @@ void animationPreview();
 const uint8_t numLEDs = 2;
 
 // Select which hardware configuration to use
-ConfigType activeConfig = AG_ECHO_FRAME;
+ConfigType activeConfig = NANOFRAME;
 
 // Define the LED array and button pins according to the active configuration
 ledSegment led[2];
@@ -80,7 +80,7 @@ void setup() {
     // Try to load saved settings from flash
     if (!loadSettingsFromFlash(&swNum, &currentBrightness, &animationMode)) {
         // If no valid settings found, use defaults (which are already set in declarations)
-        swNum = 23;
+        swNum = 6;
         currentBrightness = 0.4; // Default brightness
         animationMode = 0; // Default to glitchLoop
     }
@@ -518,6 +518,8 @@ void brightnessAdjustmentMode() {
 
     // Reset mode flag
     brightnessAdjustMode = false;
+    // Save brightness setting to flash
+    saveSettingsToFlash(swNum, currentBrightness, animationMode);
 }
 
 bool buttonInterruptCheck() {

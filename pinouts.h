@@ -9,6 +9,7 @@
 // Available configurations as enum for easier selection
 enum ConfigType {
     NANOFRAME,
+    BREACH_KEY,
     AURORA_GLASYA,
     BLINDER_MINI,
     AG_ECHO_FRAME
@@ -28,6 +29,16 @@ const PinConfig NANOFRAME_PINOUT = {
     },
     .colorButton = PD6,
     .animButton = PD7
+};
+
+// Configuration for Breach Key RSK5
+const PinConfig BREACH_KEY_PINOUT = {
+    .leds = {
+        {PC4, PC5, PC6}, // Upper LEDs
+        {PD4, PD5, PD3}  // Lower LEDs
+    },
+    .colorButton = PD2,
+    .animButton = PC7
 };
 
 // Configuration for Aurora Glasya
@@ -65,6 +76,8 @@ inline const PinConfig& getActiveConfig(ConfigType configType) {
     switch(configType) {
         case NANOFRAME:
             return NANOFRAME_PINOUT;
+        case BREACH_KEY:
+            return BREACH_KEY_PINOUT;
         case AURORA_GLASYA:
             return AURORA_GLASYA_PINOUT;
         case BLINDER_MINI:
