@@ -10,7 +10,7 @@
 #include "flashStorage.h"
 // Select from the active hardware configuration options in hardware.h
 // That file stores all GPIO pin assignments, brightness tuning, and LED calibration values.
-#define ACTIVE_CONFIG CONFIG_BREACH_KEY
+#define ACTIVE_CONFIG CONFIG_NANOFRAME
 #include "hardware.h"
 
 // Define the LED array and button pins according to the active configuration
@@ -106,7 +106,7 @@ void setup() {
 
     // Try to load saved settings from flash; currentBrightness falls back to hardware default if none saved
     if (!loadSettingsFromFlash(&swNum, &currentBrightness, &animationMode)) {
-        swNum             = 0;
+        swNum             = 9;
         currentBrightness = config.defaultBrightness;
         animationMode     = 0;
     }
