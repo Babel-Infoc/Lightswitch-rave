@@ -28,7 +28,7 @@ uint8_t animBtn;
 uint8_t animIndex = 0;
 
 // Maximum brightness modifier, 0-255
-const float maxBrightness = 0.7;
+const float maxBrightness = 0.6;
 
 // Slow down all animations by this amount (in milliseconds)
 const uint8_t slowDown = 0;

@@ -21,11 +21,11 @@ struct PinConfig {
 // Configuration for Blinder Mini
 const PinConfig BLINDER_MINI = {
     .leds = {
-        {PC6, PC5, PC4}, // Upper LEDs
-        {PD5, PD4, PD3}  // Lower LEDs
+        {PC4, PC5, PC6}, // Upper LEDs
+        {PD3, PD4, PD5}  // Lower LEDs
     },
-    .colorButton = PD6,
-    .animButton = PD2
+    .colorButton = PD2,
+    .animButton = PC7
 };
 
 // Configuration for AG Echo Frame

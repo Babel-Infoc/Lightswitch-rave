@@ -103,8 +103,12 @@ void sendToRGB(const uint8_t segment, const uint8_t rgbValue[3]) {
     int tunedRGB[3];
 
     // Write the end color to the handover color matching the led segment
+    // If segment 0 is updated, also mirror it to segment 1 so channel 2 matches channel 1.
     for (int i = 0; i < 3; i++) {
         handoverColor[segment][i] = rgbValue[i];
+        if (segment == 0) {
+            handoverColor[1][i] = rgbValue[i];
+        }
     }
 
     // Calculate the brightness-adjusted and gamma-corrected values using global tuneRatio
@@ -112,11 +116,24 @@ void sendToRGB(const uint8_t segment, const uint8_t rgbValue[3]) {
         tunedRGB[pin] = gamma8[(int)(rgbValue[pin] * tuneRatio[pin] * maxBrightness)];
     }
 
-    // Set the pin states based on the tuned RGB values
-    for (int brightness = 0; brightness < 100; brightness++) {
-        digitalWrite(led[segment].red, brightness < tunedRGB[0] ?      LOW : HIGH);
-        digitalWrite(led[segment].green, brightness < tunedRGB[1] ?    LOW : HIGH);
-        digitalWrite(led[segment].blue, brightness < tunedRGB[2] ?     LOW : HIGH);
+    // Determine which segments to update: always update the requested segment,
+    // and when segment 0 is written also update segment 1 to mirror it.
+    uint8_t targets[2];
+    uint8_t targetCount = 1;
+    targets[0] = segment;
+    if (segment == 0) {
+        targets[1] = 1;
+        targetCount = 2;
+    }
+
+    // Set the pin states for each target segment based on the tuned RGB values
+    for (uint8_t t = 0; t < targetCount; t++) {
+        uint8_t seg = targets[t];
+        for (int brightness = 0; brightness < 100; brightness++) {
+            digitalWrite(led[seg].red, brightness < tunedRGB[0] ?      LOW : HIGH);
+            digitalWrite(led[seg].green, brightness < tunedRGB[1] ?    LOW : HIGH);
+            digitalWrite(led[seg].blue, brightness < tunedRGB[2] ?     LOW : HIGH);
+        }
     }
 
     // Check buttons once per frame, with debounce handling
