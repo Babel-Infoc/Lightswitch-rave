@@ -64,7 +64,7 @@ const PinConfig BLINDER_MINI_PINOUT = {
 // Configuration for AG Echo Frame
 const PinConfig AG_ECHO_FRAME_PINOUT = {
     .leds = {
-        {PD7, PD6, PD5}, // Eyepiece
+        {PD5, PD6, PD7}, // Eyepiece
         {PD2, PD3, PD4}  // Main body
     },
     .colorButton = PC3,

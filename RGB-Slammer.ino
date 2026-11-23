@@ -20,7 +20,7 @@ void animationPreview();
 const uint8_t numLEDs = 2;
 
 // Select which hardware configuration to use
-ConfigType activeConfig = NANOFRAME;
+ConfigType activeConfig = AG_ECHO_FRAME;
 
 // Define the LED array and button pins according to the active configuration
 ledSegment led[2];
@@ -28,7 +28,7 @@ uint8_t colorBtn;
 uint8_t animBtn;
 
 // Set the default brightness modifier, 0.0 to 0.65 max
-float currentBrightness = 0.5;
+float currentBrightness = 0.6;
 
 // Brightness adjustment settings
 const float minBrightness = 0.2;
