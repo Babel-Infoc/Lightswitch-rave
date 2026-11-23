@@ -24,8 +24,8 @@ const PinConfig BLINDER_MINI = {
         {PC4, PC5, PC6}, // Upper LEDs
         {PD3, PD4, PD5}  // Lower LEDs
     },
-    .colorButton = PD2,
-    .animButton = PC7
+    .colorButton = PD6,
+    .animButton = PD2
 };
 
 // Configuration for AG Echo Frame
