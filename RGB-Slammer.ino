@@ -94,15 +94,15 @@ void loop() {
     switch (animIndex) {
         //case 0: waveformFade(0); break;
         //case 0: glitchLoop(70, 20, 1000); break;
-        //case 1: progressiveFade1(1400); break;
-        //case 2: progressiveFade2(1400); break;
-        //case 3: randomFade(20, 1000); break;
         //case 4: pulseColor(30); break;
         //case 5: pulse2(40); break;
-        //case 6: photoshootMode1(); break;
         //case 7: photoshootMode2(65, 210); break;
         //case 8: photoshootMode3(); break;
         case 0: digitalEyes(70, 25, 3000); break;
+        case 1: progressiveFade1(1400); break;
+        case 2: progressiveFade2(1400); break;
+        case 3: randomFade(20, 1000); break;
+        case 4: photoshootMode1(); break;
     }
 }
 
